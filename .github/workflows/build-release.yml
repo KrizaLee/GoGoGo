@@ -17,8 +17,7 @@ jobs:
       # https://github.com/marketplace/actions/checkout
       - uses: actions/checkout@v4
 
-      # 设置 JDK
-      - name: set up JDK 17
+      - name: Setup JDK
         uses: actions/setup-java@v4
         with:
           java-version: '17'
@@ -52,12 +51,6 @@ jobs:
         env:
           BUILD_TOOLS_VERSION: ${{ env.BUILD_TOOL_VERSION }}
 
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{steps.sign_apk.outputs.signedReleaseFile}}
-          path: ${{steps.sign_apk.outputs.signedReleaseFile}}
-
       # https://github.com/marketplace/actions/auto-changelog
       # require commit format are "type(category): description [flag]"
       - name: Make Changelog
@@ -78,15 +71,15 @@ jobs:
             style: Code Style
             revert: Reverts
           default-commit-type     : Other Changes
+          #release-name            : v1.0.0
+          #release-name-prefix     : ""
           mention-authors         : true
           mention-new-contributors: true
           include-compare-link    : true
-
-      - name: Upload Changelog
-        uses: actions/upload-artifact@v4
-        with:
-          name: Changelog
-          path: ${{ steps.changelog.outputs.changelog }}
+          #include-pr-lints        : true
+          #include-commit-lints    : true
+          #semver                  : true
+          #use-github-autolink     : true
 
       # https://github.com/marketplace/actions/gh-release
       - name: Release APK
@@ -96,4 +89,4 @@ jobs:
           token: ${{ github.token }}
           body: ${{ steps.changelog.outputs.changelog }}
           prerelease: false
-          files: ${{steps.sign_apk.outputs.signedReleaseFile}}
+          files: ${{ steps.sign_apk.outputs.signedReleaseFile }}

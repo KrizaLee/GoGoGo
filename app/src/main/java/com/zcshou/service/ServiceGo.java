@@ -192,7 +192,6 @@ public class ServiceGo extends Service {
 
                         sendEmptyMessage(HANDLER_MSG_ID);
                     }
-                    mJoyStick.show();
                 } catch (InterruptedException e) {
                     XLog.e("SERVICEGO: ERROR - handleMessage");
                     Thread.currentThread().interrupt();

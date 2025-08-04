@@ -48,6 +48,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class JoyStick extends View {
     private static final int DivGo = 1000;    /* 移动的时间间隔，单位 ms */
@@ -364,12 +365,16 @@ public class JoyStick extends View {
         btnView.setListener(this::processDirection);
 
         /* 这里用来决定摇杆类型 */
-        if (sharedPreferences.getString("setting_joystick_type", "0").equals("0")) {
+        if (Objects.equals(sharedPreferences.getString("setting_joystick_type", "0"), "1")) {
             rckView.setVisibility(VISIBLE);
             btnView.setVisibility(GONE);
-        } else {
+        }else if (Objects.equals(sharedPreferences.getString("setting_joystick_type", "0"), "2")) {
             rckView.setVisibility(GONE);
             btnView.setVisibility(VISIBLE);
+        } else {
+            rckView.setVisibility(GONE);
+            btnView.setVisibility(GONE);
+            mJoystickLayout.findViewById(R.id.joystick_group).setVisibility(GONE);
         }
     }
 

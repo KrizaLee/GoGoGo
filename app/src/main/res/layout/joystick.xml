@@ -81,6 +81,7 @@
         android:layout_height="@dimen/joystick_rockerview_height"/>
 
     <LinearLayout
+        android:id="@+id/joystick_group"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">

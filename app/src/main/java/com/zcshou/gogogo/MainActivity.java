@@ -475,7 +475,7 @@ public class MainActivity extends BaseActivity implements SensorEventListener {
                 File file = new File(getExternalFilesDir("Logs"), GoApplication.LOG_FILE_NAME);
                 ShareUtils.shareFile(this, file, item.getTitle().toString());
             } else if (id == R.id.nav_contact) {
-                Uri uri = Uri.parse("https://gitee.com/itexp/gogogo/issues");
+                Uri uri = Uri.parse("https://gitee.com/leeaex/GoGoGo/issues");
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent);
             }
@@ -504,7 +504,7 @@ public class MainActivity extends BaseActivity implements SensorEventListener {
                 if (drawer.isDrawerOpen(GravityCompat.START)) {
                     drawer.closeDrawer(GravityCompat.START);
                 }
-                Uri uri = Uri.parse("https://gitee.com/itexp/gogogo");
+                Uri uri = Uri.parse("https://gitee.com/leeaex/GoGoGo");
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent);
             });
@@ -796,9 +796,7 @@ public class MainActivity extends BaseActivity implements SensorEventListener {
                     }
                 }
                 /**
-                 * 错误的状态码
-                 * <a><a href="http://lbsyun.baidu.com/index.php?title=android-locsdk/guide/addition-func/error-code">...</a></a>
-                 * <p>
+                 * 定位错误返回码：http://lbsyun.baidu.com/index.php?title=android-locsdk/guide/addition-func/error-code
                  * 回调定位诊断信息，开发者可以根据相关信息解决定位遇到的一些问题
                  *
                  * @param locType      当前定位类型
@@ -1365,7 +1363,8 @@ public class MainActivity extends BaseActivity implements SensorEventListener {
     }
 
     private void checkUpdateVersion() {
-        String mapApiUrl = "https://api.github.com/repos/zcshou/gogogo/releases/latest";
+        //String mapApiUrl = "https://api.github.com/repos/KrizaLee/gogogo/releases/latest";
+        String mapApiUrl = "https://gitee.com/api/v5/repos/leeaex/GoGoGo/releases/latest";
 
         okhttp3.Request request = new okhttp3.Request.Builder().url(mapApiUrl).get().build();
         final Call call = mOkHttpClient.newCall(request);
@@ -1373,7 +1372,7 @@ public class MainActivity extends BaseActivity implements SensorEventListener {
             private void showFail() {
                 View v = findViewById(android.R.id.content);
                 Snackbar.make(v, "获取更新信息失败", Snackbar.LENGTH_LONG).setAction("去浏览器看看", view -> {
-                    Uri uri = Uri.parse("https://github.com/ZCShou/GoGoGo/releases");
+                    Uri uri = Uri.parse("https://gitee.com/leeaex/GoGoGo");
                     Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                     startActivity(intent);
                 }).show();
@@ -1396,8 +1395,8 @@ public class MainActivity extends BaseActivity implements SensorEventListener {
                             String curVersion = GoUtils.getVersionName(MainActivity.this);
 
                             if (curVersion != null
-                                    && (!getRetJson.getString("name").contains(curVersion)
-                                    || !getRetJson.getString("tag_name").contains(curVersion))) {
+                                    && (!curVersion.contains(getRetJson.getString("name"))
+                                    || !curVersion.contains(getRetJson.getString("tag_name")))) {
                                 final android.app.AlertDialog alertDialog = new android.app.AlertDialog.Builder(MainActivity.this).create();
                                 alertDialog.show();
                                 alertDialog.setCancelable(false);
